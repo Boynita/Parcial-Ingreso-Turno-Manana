@@ -5,41 +5,102 @@ marca, precio, peso en kilogramos, tipo(sólido o líquido)
 a)informar el peso total de la compra.
 b)la marca del más caro de los líquidos
 c)la marca del más liviano de los sólidos
-*/function mostrar()
-{
-  var productos;
+*/function mostrar(){
+
+
   var respuesta;
-  var pesoDeCompra;
-  var totalDeCompra;
-  var marcaMasCaraLiquidos;
-  var marcaMasLivianaSolidos;
+  var marca;
+  var precio;
+  var peso;
+  var tipo;
+  var acumuladorPesoTotal = 0;
+  var masCaroLiquido;
+  var primeraVezLiquido = true;
+  var marcaLiquidoMasCaro;
+  var masLivianoSolidos;
+  var marcaMasLivianoSolidos;
+  var primeraVezSolido = true;
+  var acumuladorPesoSolidos = 0;
+  var contadorSolidos = 0;
 
-  respuesta="S"
+  do {
+      do {
+          marca = prompt("Ingrese una marca");
+      } while (marca == null);
 
-  while(respuesta){
-    productos= prompt("ingrese el producto.");
-    while(productos != "marca" && != "precio" && "peso en kilogramos" && != "solido" || != "liquido");
-    productos= prompt("Error, ingrese el producto correcto.");
+      do {
+          precio = prompt("Ingrese precio");
+          precio = parseInt(precio);
+      } while(isNaN(precio) || precio < 1);
 
-    pesoDeCompra= parseInt(prompt("Su peso de compra en total es."))
-    while(isNaN(totalDeCompra)){
-      totalDeCompra= parseInt(prompt("Error, en su total de compra."));
-    }
-    do {
-			marcaMasCaraLiquidos = prompt("Ingrese el producto");
-			while (!(isNaN(marcaMasCaraLiquidos))) {
-				marcaMasCaraLiquidos = prompt("Error, ingrese la marca");
-			}
-    } while (!(isNaN(marcaMasCaraLiquidos)));
+      do {
+          peso = prompt("Ingrese peso");
+          peso = parseInt(peso);
+      } while (isNaN(peso) || peso < 1);
+      
+      do {
+          tipo = prompt("Ingrese tipo");
+      } while (tipo != 's' && tipo != 'l');
+      
+      // PUNTO A  
+      acumuladorPesoTotal += peso;
 
-    do {
-			marcaMasLivianaSolidos = prompt("Ingrese el producto");
-			while (!(isNaN(marcaMasLivianaSolidos))) {
-				marcaMasLivianaSolidos = prompt("Error, ingrese la marca");
-			}
-    } while (!(isNaN(marcaMasLivianaSolidos)));
+      // PUNTO B
+      if (tipo == 'l') {
+          if (primeraVezLiquido) {
+              primeraVezLiquido = false;
+              masCaroLiquido = precio;
+              marcaLiquidoMasCaro = marca;
+          } else {
+              // NO ES LA PRIMERA VEZ
+              // masCaroLiquido TIENE VALOR
+              if (precio > masCaroLiquido) {
+                  masCaroLiquido = precio;
+                  marcaLiquidoMasCaro = marca;
+              }
+          }
+      } else {
+          // SON SOLIDOS
+          contadorSolidos++;
+          acumuladorPesoSolidos += peso;
+          if (primeraVezSolido) {
+              primeraVezSolido = false;
+              masLivianoSolidos = peso;
+              marcaMasLivianoSolidos = marca;
+          } else {
+              if (peso < masLivianoSolidos) {
+                  masLivianoSolidos = peso;
+                  marcaMasLivianoSolidos = marca;
+              }
+          }
+      }
+
+      respuesta = confirm("Desea continuar?");
+  } while (respuesta);
+  
+  // PUNTO A
+  console.log('Peso total ' + acumuladorPesoTotal);
+  // PUNTO B
+  if (marcaLiquidoMasCaro) {
+      console.log('El mas caro de los liquido es ' + marcaLiquidoMasCaro);
+  } else {
+      console.log('No se cargaron liquido');
+  }
     
-  }//end while
+  
+  if (contadorSolidos > 0) {
+      // PUNTO C
+      console.log('Marca mas liviano solidos ' + marcaMasLivianoSolidos);
+      // PUNTO D
+      console.log('el promedio de peso de solidos es ' + (acumuladorPesoSolidos / contadorSolidos));
+  } else {
+      console.log('No se ingresaron solidos');
+  }
 
-  console.log(marcaMasLivianaSolidos + marcaMasCaraLiquidos + totalDeCompra);
+
+
+
+
 }
+
+

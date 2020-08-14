@@ -8,57 +8,76 @@ c)la mujer con más temperatura(si la hay)
 pedir datos por prompt y mostrar por document.write o console.log
 */
 function mostrar()
-{	
-	var nombre;
-	var temperatura;
-	var sexoF;
-	var sexoM;
-	var edades;
-	var contador;
-	var cantidadDePersonasFemeninas;
-	var cantidadDePersonasMasculinas;
-	var cantidadDePersonas;
-	var promedioEnTotal;
 
-	var datos;
+	var contador = 0;
+    var nombre;
+    var temperatura;
+    var sexo;
+    var edad;
+    var contadorHombres = 0;
+    var contadorMujeres = 0;
+    var acumuladorEdades = 0;
+    var edadPromedio;
+    var maximoTemperaturaMujer;
+    var primeraVezMujer = true;
+    var nombreMaximoTemperaturaMujer;
 
-	temperatura=39;
-	contador=0;
-	promedioEnTotal=0;
+    while (contador < 5) {
+        contador++;
 
+        do {
+            nombre = prompt("Ingrese su nombre");
+        } while (nombre == null);
 
+        do {
+            temperatura = prompt("Ingrese temperatura");
+            temperatura = parseInt(temperatura);
+        } while (isNaN(temperatura) || temperatura < 30);
 
-	do { //VALIDANDO DATOS
-		datos = parseInt(prompt("Ingrese los datos."));	
-		
-		}while (isNaN(datos) || datos < 0) {
-			(dato != "nombre" && != "temperatura" && != "edad");
-			datos =(prompt("Error, ingrese los datos correctos."));
-			contador++;
-			
-		cantidadDePersonasFemeninas= prompt("Ingrese sexo.");	
-		cantidadDePersonasFemeninas= parseInt(cantidadDePersonasFemeninas);
-		cantidadDePersonasMasculinas= prompt("Ingrese el sexo.");
-		cantidadDePersonasMasculinas= parseInt (cantidadDePersonasMasculinas);
+        do {
+            sexo = prompt("Ingrese sexo (f-m)");
+        } while (sexo != 'f' && sexo != 'm');
 
-		while(cantidadDePersonas<5){
-			cantidadDePersonas= prompt("Error, al ingresar los datos.");
-			cantidadDePersonas= parseInt(cantidadDePersonas);
-			}
-		
-		if(edades==promedioEnTotal){
+        do {
+            edad = prompt("Ingrese edad");
+            edad = parseInt(edad);
+        } while (isNaN(edad) || edad < 0);
+        /**
+         * FIN TOMA DE DATOS
+         */
 
-			promedioEnTotal=edad;
-		}else{
-			temperatura=cantidadDePersonasFemeninas;
-		}
+        // PUNTO A
+        if (sexo == 'f') {
+            contadorMujeres++;
+            // PUNTO C 
+            if (primeraVezMujer) {
+                primeraVezMujer = false;
+                maximoTemperaturaMujer = temperatura;
+                nombreMaximoTemperaturaMujer = nombre;
+            } else {
+                if (temperatura > maximoTemperaturaMujer) {
+                    maximoTemperaturaMujer = temperatura;
+                    nombreMaximoTemperaturaMujer = nombre;
+                }
+            }
+        } else {
+            contadorHombres++;
+        }
 
+        // PUNTO B
+        acumuladorEdades += edad;
+        
+    } // END WHILE
 
-	}
-
-	console.log("Datos de las personas ingresadas al Hospital" + "datos del sexo" + "nombre" + "Si alguien tiene la temperatura alta."); 
-
-
-	
-}
-
+    // PUNTO A
+    console.log('a) cantidad de mujeres ' + contadorMujeres);
+    console.log('a) cantidad de hombres ' + contadorHombres);
+    // PUNTO B
+    edadPromedio = acumuladorEdades / contador;
+    console.log('b) Edad promedio: ' + edadPromedio);
+    // PUNTO C
+    if (nombreMaximoTemperaturaMujer == undefined) {
+        console.log('c) No se ingresaron mujeres');
+    } else {
+        console.log('c) Nombre mujer mayor temperatura ' + nombreMaximoTemperaturaMujer);
+    }

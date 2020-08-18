@@ -1,80 +1,96 @@
 /*
 3)Nos ingresan una cantidad indeterminada de estadías de  vacaciones,
 validando los datos ingresados. 
+
 nombre del titular ,lugar ( “bariloche”, “cataratas” o “salta”),
 temporada(“otoño”,”invierno, “verano,”primavera”),
 cantidad de personas que viajan.
+
 informar:
 a)el lugar más elegido
+
 b)el nombre de titular que lleva más pasajeros.
+
 c)el promedio de personas por viaje,  que viajan en invierno
 */
-function mostrar()
-{
+function mostrar(){
 
-	var nombre;
-	var lugar;
 	var respuesta;
-	var personas;
+	var nombreDelTitular;
+	var lugar;
 	var temporada;
-	var mayorPersonas;
-	var titularMayor;
-	var sumaAcumulada = 0;
-	var contadorInvierno = 0;
-    var promedioInvierno = 0;
+	var contadorDePersonasQueViajan = 0;
+	var primeraVezLugar = true;
+	var lugarMasElegido;
+	var primeraVezPasajeros = true;
+	var nombreDelTitualQueMasPasajerosLleva;
+	var acumuladorDePersonasPorViaje = 0;
 
 
-	do {
+	while(contadorDePersonasQueViajan > 20){
+		contadorDePersonasQueViajan++;
+		acumuladorDePersonasPorViaje += temporada;
+	do{
+		//Nombre del titular.
+		do{
+			nombreDelTitular = prompt("Ingrese su Nombre");
+		}while(nombreDelTitular = null);
+
+		//Nombre del Lugar.
+
+		do{
+			lugar = prompt("Ingrese el Destino");
+		}while(lugar != "bariloche" && lugar != "cataratas" || lugar != "salta");
+
+		//Temporada
+
+		do{
+			temporada = prompt("Ingrese la temporada que quiera viajar");
+		}while(temporada != "otoño" && temporada != "invierno" && temporada != "verano" && temporada != "primavera");
+//*************************************************************************** */
+		//PUNTO A
+		if(lugar == "bariloche" && lugar == "cataratas" && lugar == "salta"){
+
+			if(primeraVezLugar){
+				primeraVezLugar = false;
+				lugarMasElegido = lugar;
+			}
+		}
+		
+		//PUNTO B
+		if(nombreDelTitular == contadorDePersonasQueViajan){
+			primeraVezPasajeros = false;
+			nombreDelTitualQueMasPasajerosLleva = contadorDePersonasQueViajan;
+		}
+
+		if(contadorDePersonasQueViajan > 0){
+
+			console.log ("Nombre del titular" + nombreDelTitular);
+
+			console.log ("Destino ingresado" + lugar);
+
+			console.log ("Promedio de personas por viaje" + (acumuladorDePersonasPorViaje / contadorDePersonasQueViajan));
+		}else {
+			console.log ("Error, no se ingresaron datos");
+		}
+
+		respuesta = confirm("Desea Continuar?");
+	}while(respuesta);
+	}//END WHILE
 
 
-	do {
-		nombre=prompt("ingrese el nombre del titular");
-	} while (!(isNaN(nombre)));
-
-	do {
-		lugar=prompt("ingrese el lugar bariloche, cataratas o salta");
-	} while (lugar != "bariloche" && lugar != "salta"  && lugar != "cataratas" );
-
-	do {
-		temporada= prompt("ingrese la temporada invierno, otoño, verano, primavera");
-	} while (temporada != "otoño" && temporada != "invierno" && temporada != "primavera" && temporada != "verano" );
-
-	do {
-	personas=prompt("ingrese la cantidad de personas");
-	personas=parseInt(personas);
-	} while (isNaN(personas) || personas <= 0);
-
-	if(lugarMayor < lugar){
-		lugarMayor=lugar;
-
-	}
-
-	if(titularMayor < nombre){
-		titularMayor=nombre;
-		mayorPersonas=personas;
-	}
-
-	if(temporada == "invierno"){
-		sumaPersonas=sumaPersonas+personas
-		contadorInvierno++;
-	}
-
-	respuesta=prompt("desea ingresar denuevo?");
 
 
-   } while (respuesta == "si");
 
-   document.write("el lugar mas elegido es " + lugarMayor + "<br>");
 
-   document.write("el nombre del titular que lleva mas pasajeros es " + titularMayor + "<br>");
-if(temporada == "invierno"){
 
-	promedioInvierno=sumaPersonas/contadorInvierno;
-	promedioInvierno=parseInt(promedioInvierno);
 
-	document.write("el promedio de personas por viajq eu viajan en invierno es " + promedioInvierno);
 
-}
+
+
+
+
+
 
 
 }
